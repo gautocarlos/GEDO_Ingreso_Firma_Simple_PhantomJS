@@ -69,10 +69,21 @@ public class GEDO_Ingreso_Firma_Simple_PhantomJS {
 
 	@When("^El usuario firma una tarea de firma simple con certificado$")
 	public void testGEDOIngresoFirmaSimple() throws Exception {
-//		driver.navigate().to("http://eug.nac.gde.gob.ar/gedo-web/");
-		wait = new WebDriverWait(driver, 20);
+		// driver.navigate().to("http://eug.nac.gde.gob.ar/gedo-web/");
+		wait = new WebDriverWait(driver, 30);
 		System.out.println("driver.getCurrentUrl():: " + driver.getCurrentUrl());
-		Thread.sleep(2000);
+		Thread.sleep(3000);
+		for (int second = 0;; second++) {
+			if (second >= 60)
+				fail("timeout");
+			try {
+				if (isElementPresent(By.xpath("//td/img")))
+					break;
+			} catch (Exception e) {
+			}
+			Thread.sleep(2000);
+		}
+
 		driver.findElement(By.xpath("//td/img")).click();
 		for (int second = 0;; second++) {
 			if (second >= 60)
@@ -82,7 +93,7 @@ public class GEDO_Ingreso_Firma_Simple_PhantomJS {
 					break;
 			} catch (Exception e) {
 			}
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		}
 
 		driver.findElement(By.xpath("//td[5]/div/div/div/img")).click();
