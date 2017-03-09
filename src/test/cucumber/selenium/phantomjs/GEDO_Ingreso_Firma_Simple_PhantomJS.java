@@ -50,32 +50,23 @@ public class GEDO_Ingreso_Firma_Simple_PhantomJS {
 
 	@When("^Ingresa a la URL \"(.*)\"$")
 	public void ingresoCAS(String url) throws Exception {
-		// System.out.println("URL: " + url);
 		driver.navigate().to(url);
 		wait = new WebDriverWait(driver, 20);
-		// System.out.println("driver.getCurrentUrl():: " +
-		// driver.getCurrentUrl());
 	}
 
 	@When("^El usuario ingresa al sistema con sus credenciales: usuario \"(.*)\" y password \"(.*)\"$")
 	public void datosLogin(String usuario, String password) throws Exception {
-		// System.out.println("datosLogin - Ini :: driver.getCurrentUrl():: " +
-		// driver.getCurrentUrl());
 		driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div/div[2]/div/input")).clear();
 		driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div/div[2]/div/input")).sendKeys(usuario);
 		driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div/div[3]/div/input")).clear();
 		driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div/div[3]/div/input"))
 				.sendKeys(password);
 		driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div/div[4]/button")).click();
-		// System.out.println("datosLogin - Fin :: driver.getCurrentUrl():: " +
-		// driver.getCurrentUrl());
 	}
 
 	@When("^El usuario firma una tarea de firma simple con certificado$")
 	public void testGEDOIngresoFirmaSimple() throws Exception {
-		// driver.navigate().to("http://eug.nac.gde.gob.ar/gedo-web/");
 		wait = new WebDriverWait(driver, 30);
-		//		System.out.println("driver.getCurrentUrl():: " + driver.getCurrentUrl());
 		Thread.sleep(3000);
 		waitElementIsPresentByXpath("//td/img");
 		driver.findElement(By.xpath("//td/img")).click();
@@ -92,8 +83,8 @@ public class GEDO_Ingreso_Firma_Simple_PhantomJS {
 	/**
 	 * @param xpath
 	 * @throws Exception
-	 * Espera a que un elemento aparezca
-	 * Busca el mismo mediante su xpath
+	 *             Espera a que un elemento aparezca Busca el mismo mediante su
+	 *             xpath
 	 */
 	private void waitElementIsPresentByXpath(String xpath) throws Exception {
 		for (int second = 0;; second++) {
@@ -110,7 +101,6 @@ public class GEDO_Ingreso_Firma_Simple_PhantomJS {
 
 	@Then("^Se genera un número de documento GDE$")
 	public void se_genera_un_numero_de_documento_GDE() throws Exception {
-		// driver.close();
 		String mensajeGeneracionDocumento = driver
 				.findElement(By
 						.xpath("/html/body/div[3]/div[2]/div/div/div/table/tbody/tr/td/table/tbody//tr[1]/td/table/tbody/tr/td/table/tbody/tr/td/span"))
