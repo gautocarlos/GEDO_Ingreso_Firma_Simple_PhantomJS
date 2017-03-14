@@ -2,13 +2,22 @@ package test.cucumber.selenium.phantomjs;
 
 import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -105,10 +114,28 @@ public class GEDO_Ingreso_Firma_Simple_PhantomJS {
 				.findElement(By
 						.xpath("/html/body/div[3]/div[2]/div/div/div/table/tbody/tr/td/table/tbody//tr[1]/td/table/tbody/tr/td/table/tbody/tr/td/span"))
 				.getText();
+		capturarPantalla();
 		System.out.println("Mensaje de confirmación: " + mensajeGeneracionDocumento);
 		/**
 		 * TODO: Generar validación de mensaje de documento generado
 		 */
+	}
+
+	public void capturarPantalla() throws IOException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
+		Date date = new Date();
+		System.out.println(dateFormat.format(date)); //2016-11-16_12.08.43
+		System.out.println("Tomando captura de pantalla.");
+		driver = (PhantomJSDriver) new Augmenter().augment(driver);
+		File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		System.out.println("File:" + srcFile);
+		try {
+			FileUtils.copyFile(srcFile, new File(".\\capturasDePantalla\\screenshot_" + dateFormat.format(date) + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		System.out.println("Captura de pantalla realizada.");
 	}
 
 	@After
